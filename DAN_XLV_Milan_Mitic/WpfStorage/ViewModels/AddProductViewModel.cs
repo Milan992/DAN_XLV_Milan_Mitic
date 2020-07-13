@@ -14,6 +14,8 @@ namespace WpfStorage.ViewModels
     {
         AddProduct addProduct;
         Service service = new Service();
+        FileLogger fileLogger = new FileLogger();
+        Notification notification = new Notification();
 
         #region Constructors
 
@@ -65,6 +67,10 @@ namespace WpfStorage.ViewModels
         {
             try
             {
+                service.ProductAdded += fileLogger.LogAddedProduct;
+                service.ProductAdded += notification.ProductAdded;
+                service.ProductEdited += fileLogger.LogEditedProduct;
+                service.ProductEdited += notification.ProductEdited;
                 service.AddProduct(Product);
             }
             catch (Exception ex)

@@ -11,6 +11,7 @@ namespace WpfStorage.ViewModels
     {
         Employee employee;
         Service service = new Service();
+        Notification notification = new Notification();
 
         #region Constructors
 
@@ -80,6 +81,8 @@ namespace WpfStorage.ViewModels
         {
             try
             {
+                service.ProductStored += notification.ProductStored;
+                service.ProductNotStored += notification.ProductNotStored;
                 service.StoreProduct(Product);
             }
             catch (Exception ex)

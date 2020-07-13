@@ -11,6 +11,8 @@ namespace WpfStorage.ViewModels
     {
         Manager manager;
         Service service = new Service();
+        FileLogger fileLogger = new FileLogger();
+        Notification notification = new Notification();
 
         #region Constructors
 
@@ -146,6 +148,8 @@ namespace WpfStorage.ViewModels
         {
             try
             {
+                service.ProductDeleted += fileLogger.LogDeletedProduct;
+                service.ProductDeleted += notification.ProductDeleted;
                 service.DeleteProduct(Product);
             }
             catch (Exception ex)
