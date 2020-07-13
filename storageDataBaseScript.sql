@@ -12,6 +12,5 @@ ProductName varchar(10) not null,
 Code varchar(30) unique not null,
 Amount int not null,
 Price int not null,
-Stored bit,
-constraint checkCode check(Code not like '%[^0-9]%')
+Stored bit not null
 )
