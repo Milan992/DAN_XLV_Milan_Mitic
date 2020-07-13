@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Input;
 using WpfStorage.Model;
 using WpfStorage.Views;
 
@@ -52,6 +55,42 @@ namespace WpfStorage.ViewModels
                 OnPropertyChanged("ProductList");
 
             }
+        }
+
+        #endregion
+
+        #region Commands
+
+        private ICommand storeProduct;
+
+        public ICommand StoreProduct
+        {
+            get
+            {
+                if (storeProduct == null)
+                {
+                    storeProduct = new RelayCommand(param => StoreProductExecute(), param => CanStoreProductExecute());
+                }
+
+                return storeProduct;
+            }
+        }
+
+        private void StoreProductExecute()
+        {
+            try
+            {
+                service.StoreProduct(Product);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private bool CanStoreProductExecute()
+        {
+            return true;
         }
 
         #endregion

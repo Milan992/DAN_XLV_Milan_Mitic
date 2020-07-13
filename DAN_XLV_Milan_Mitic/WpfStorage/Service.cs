@@ -28,5 +28,23 @@ namespace WpfStorage
                 return null;
             }
         }
+
+        /// <summary>
+        /// Sets product's boolean value Stored to true.
+        /// </summary>
+        /// <param name="product"></param>
+        public void StoreProduct(tblProduct product)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Deletes product from database if Stored value is set do false, else writes out a message that the product can't be deleted.
+        /// </summary>
+        /// <param name="product"></param>
+        internal void DeleteProduct(tblProduct product)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
