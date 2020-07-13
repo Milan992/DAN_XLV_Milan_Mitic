@@ -5,8 +5,59 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfStorage.Views"
         mc:Ignorable="d"
-        Title="AddProduct" Height="450" Width="800">
+        Title="AddProduct" Height="350" Width="800">
     <Grid>
-        
+        <Label Content="Name:"
+               HorizontalAlignment="Left"
+               Margin="40,10,0,0"
+               VerticalAlignment="Top"
+               RenderTransformOrigin="-1.579,0.192" />
+        <Label Content="Code:"
+               HorizontalAlignment="Left"
+               Margin="40,40,0,0"
+               VerticalAlignment="Top" />
+        <Label Content="Amount:"
+               HorizontalAlignment="Left"
+               Margin="40,70,0,0"
+               VerticalAlignment="Top" />
+        <Label Content="Price:"
+               HorizontalAlignment="Left"
+               Margin="40,100,0,0"
+               VerticalAlignment="Top" />
+        <TextBox HorizontalAlignment="Left"
+                 Height="23"
+                 Margin="160,13,0,0"
+                 TextWrapping="Wrap"
+                 Text="{Binding Product.ProductName, UpdateSourceTrigger=PropertyChanged}"
+                 VerticalAlignment="Top"
+                 Width="120" />
+        <TextBox HorizontalAlignment="Left"
+                 Height="23"
+                 Margin="160,43,0,0"
+                 TextWrapping="Wrap"
+                 Text="{Binding Product.Code, UpdateSourceTrigger=PropertyChanged}"
+                 VerticalAlignment="Top"
+                 Width="120" />
+        <TextBox HorizontalAlignment="Left"
+                 Height="23"
+                 Margin="160,73,0,0"
+                 TextWrapping="Wrap"
+                 Text="{Binding Product.Amount, UpdateSourceTrigger=PropertyChanged}"
+                 VerticalAlignment="Top"
+                 Width="120" />
+        <TextBox HorizontalAlignment="Left"
+                 Height="23"
+                 Margin="160,103,0,0"
+                 TextWrapping="Wrap"
+                 Text="{Binding Product.Price, UpdateSourceTrigger=PropertyChanged}"
+                 VerticalAlignment="Top"
+                 Width="120" />
+        <Button Content="Save"
+                Command="{Binding AddNewProduct, UpdateSourceTrigger=PropertyChanged}"
+                HorizontalAlignment="Left"
+                Margin="40,250,0,0"
+                VerticalAlignment="Top"
+                Width="75"
+                RenderTransformOrigin="0.32,2.25" />
     </Grid>
 </Window>

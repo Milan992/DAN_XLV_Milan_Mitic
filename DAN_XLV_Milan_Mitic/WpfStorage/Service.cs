@@ -42,7 +42,16 @@ namespace WpfStorage
         /// Deletes product from database if Stored value is set do false, else writes out a message that the product can't be deleted.
         /// </summary>
         /// <param name="product"></param>
-        internal void DeleteProduct(tblProduct product)
+        public void DeleteProduct(tblProduct product)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Adds new product to the table or updates one if product with same ID already exists.
+        /// </summary>
+        /// <param name="product"></param>
+        public void AddProduct(tblProduct product)
         {
             throw new NotImplementedException();
         }
