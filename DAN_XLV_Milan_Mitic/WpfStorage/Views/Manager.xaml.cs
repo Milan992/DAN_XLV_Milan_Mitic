@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfStorage.ViewModels;
 
 namespace WpfStorage.Views
 {
@@ -22,6 +23,7 @@ namespace WpfStorage.Views
         public Manager()
         {
             InitializeComponent();
+            this.DataContext = new ManagerViewModel(this);
         }
     }
 }

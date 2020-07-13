@@ -7,6 +7,36 @@
         mc:Ignorable="d"
         Title="Employee" Height="450" Width="800">
     <Grid>
-        
+        <DataGrid HorizontalAlignment="Left"
+                  IsReadOnly="True"
+                  Height="160"
+                  Margin="10,10,0,0"
+                  VerticalAlignment="Top"
+                  Width="auto"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding ProductList, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding Product, UpdateSourceTrigger=PropertyChanged}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID"
+                                    Binding="{Binding ID}" />
+                <DataGridTextColumn Header="Name"
+                                    Binding="{Binding ProductName}" />
+                <DataGridTextColumn Header="Code"
+                                    Binding="{Binding Code}" />
+                <DataGridTextColumn Header="Amount"
+                                    Binding="{Binding Amount}" />
+                <DataGridTextColumn Header="Price"
+                                    Binding="{Binding Price}" />
+                <DataGridTextColumn Header="Stored"
+                                    Binding="{Binding Stored}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Store product"
+                Command="{Binding StoreProduct, UpdateSourceTrigger=PropertyChanged}"
+                HorizontalAlignment="Left"
+                Margin="445,13,0,0"
+                VerticalAlignment="Top"
+                Width="90"
+                RenderTransformOrigin="0.32,2.25" />
     </Grid>
 </Window>
