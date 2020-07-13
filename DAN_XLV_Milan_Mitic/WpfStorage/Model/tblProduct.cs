@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WpfStorage
+namespace WpfStorage.Model
 {
     using System;
     using System.Collections.Generic;

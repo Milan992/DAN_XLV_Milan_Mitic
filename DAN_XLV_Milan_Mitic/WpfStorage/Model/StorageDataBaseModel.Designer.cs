@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Milan\dnevni zadaci\DAN_XLV_Milan_Mitic\DAN_XLV_Milan_Mitic\WpfStorage\StorageDataBaseModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Milan\dnevni zadaci\DAN_XLV_Milan_Mitic\DAN_XLV_Milan_Mitic\WpfStorage\Model\StorageDataBaseModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

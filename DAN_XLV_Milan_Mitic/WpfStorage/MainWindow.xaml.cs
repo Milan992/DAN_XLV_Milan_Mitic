@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfStorage.Model;
 
 namespace WpfStorage
 {
@@ -22,7 +23,7 @@ namespace WpfStorage
     {
         public MainWindow()
         {
-            InitializeComponent();
+
         }
     }
 }
