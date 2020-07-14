@@ -84,6 +84,7 @@ namespace WpfStorage.ViewModels
             {
                 AddProduct addProduct = new AddProduct();
                 addProduct.ShowDialog();
+                ProductList = service.GetAllProducts();
             }
             catch (Exception ex)
             {
@@ -117,6 +118,7 @@ namespace WpfStorage.ViewModels
             {
                 AddProduct addProduct = new AddProduct();
                 addProduct.ShowDialog();
+                ProductList = service.GetAllProducts();
             }
             catch (Exception ex)
             {
@@ -151,6 +153,7 @@ namespace WpfStorage.ViewModels
                 service.ProductDeleted += fileLogger.LogDeletedProduct;
                 service.ProductDeleted += notification.ProductDeleted;
                 service.DeleteProduct(Product);
+                ProductList = service.GetAllProducts();
             }
             catch (Exception ex)
             {

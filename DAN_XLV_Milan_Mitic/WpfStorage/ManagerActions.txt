@@ -29,3 +29,4 @@ Manager added a product 13-Jul-20 19:22:17
 Manager added a product 13-Jul-20 19:22:18
 Manager edited a product 13-Jul-20 19:22:19
 Manager edited a product 13-Jul-20 19:22:19
+Manager deleted a product - 14-Jul-20 10:02:51
