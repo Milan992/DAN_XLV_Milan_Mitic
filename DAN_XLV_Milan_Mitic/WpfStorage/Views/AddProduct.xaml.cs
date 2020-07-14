@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfStorage.Model;
 using WpfStorage.ViewModels;
 
 namespace WpfStorage.Views
@@ -24,6 +25,12 @@ namespace WpfStorage.Views
         {
             InitializeComponent();
             this.DataContext = new AddProductViewModel(this);
+        }
+
+        public AddProduct(tblProduct productEdit)
+        {
+            InitializeComponent();
+            this.DataContext = new AddProductViewModel(this, productEdit);
         }
     }
 }

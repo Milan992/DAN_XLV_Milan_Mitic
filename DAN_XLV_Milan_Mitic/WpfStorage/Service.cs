@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using WpfStorage.Model;
 
@@ -8,6 +7,61 @@ namespace WpfStorage
 {
     class Service
     {
+        #region Delegates and events
+
+        public delegate void ProductStoredEventHandler(object source, EventArgs args);
+
+        public event ProductStoredEventHandler ProductStored;
+
+        public delegate void ProductNotStoredEventHandler(object source, EventArgs args);
+
+        public event ProductNotStoredEventHandler ProductNotStored;
+
+        public delegate void ProductDeletedEventHandler(object source, EventArgs args);
+
+        public event ProductDeletedEventHandler ProductDeleted;
+
+        public delegate void ProductAddedEventHandler(object source, EventArgs args);
+
+        public event ProductAddedEventHandler ProductAdded;
+
+        public delegate void ProductEditedEventHandler(object source, EventArgs args);
+
+        public event ProductEditedEventHandler ProductEdited;
+
+        protected virtual void OnProductStored()
+        {
+            if (ProductStored != null)
+                ProductStored(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnProductNotStored()
+        {
+            if (ProductNotStored != null)
+                ProductNotStored(this, EventArgs.Empty);
+        }
+        protected virtual void OnProductAdded()
+        {
+            if (ProductAdded != null)
+                ProductAdded(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnProductEdited()
+        {
+            if (ProductEdited != null)
+                ProductEdited(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnProductDeleted()
+        {
+            if (ProductDeleted != null)
+                ProductDeleted(this, EventArgs.Empty);
+        }
+
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// Gets all products from a DataBase and adds the to the list.
         /// </summary>
@@ -30,62 +84,61 @@ namespace WpfStorage
             }
         }
 
-        public delegate void ProductStoredEventHandler(object source, EventArgs args);
-
-        public event ProductStoredEventHandler ProductStored;
-
-        public delegate void ProductNotStoredEventHandler(object source, EventArgs args);
-
-        public event ProductNotStoredEventHandler ProductNotStored;
-
         /// <summary>
         /// Sets product's boolean value Stored to true.
         /// </summary>
         /// <param name="product"></param>
         public void StoreProduct(tblProduct product)
         {
-            OnProductStored();
-
-            OnProductNotStored();
+            using (StorageEntities context = new StorageEntities())
+            {
+                if (product.Stored)
+                {
+                    tblProduct productToEdit = (from p in context.tblProducts where p.ID == product.ID select p).First();
+                    productToEdit.ProductName = product.ProductName;
+                    productToEdit.Code = product.Code;
+                    productToEdit.Price = product.Price;
+                    productToEdit.Amount = product.Amount;
+                    productToEdit.Stored = false;
+                    productToEdit.ID = product.ID;
+                    context.SaveChanges();
+                }
+                else
+                {
+                    if (SumAllStoredProducts() + product.Amount < 100)
+                    {
+                        tblProduct productToEdit = (from p in context.tblProducts where p.ID == product.ID select p).First();
+                        productToEdit.ProductName = product.ProductName;
+                        productToEdit.Code = product.Code;
+                        productToEdit.Price = product.Price;
+                        productToEdit.Amount = product.Amount;
+                        productToEdit.Stored = true;
+                        productToEdit.ID = product.ID;
+                        context.SaveChanges();
+                        OnProductStored();
+                    }
+                    else
+                    {
+                        OnProductNotStored();
+                    }
+                }
+            }
         }
 
-        protected virtual void OnProductStored()
-        {
-            if (ProductStored != null)
-                ProductStored(this, EventArgs.Empty);
-        }
-
-        protected virtual void OnProductNotStored()
-        {
-            if (ProductNotStored != null)
-                ProductNotStored(this, EventArgs.Empty);
-        }
-
-        public delegate void ProductDeletedEventHandler(object source, EventArgs args);
-
-        public event ProductDeletedEventHandler ProductDeleted;
         /// <summary>
         /// Deletes product from database if Stored value is set do false, else writes out a message that the product can't be deleted.
         /// </summary>
         /// <param name="product"></param>
         public void DeleteProduct(tblProduct product)
         {
-            OnProductDeleted();
+            using (StorageEntities context = new StorageEntities())
+            {
+                tblProduct productToDelete = (from p in context.tblProducts where p.ID == product.ID select p).First();
+                context.tblProducts.Remove(productToDelete);
+                context.SaveChanges();
+                OnProductDeleted();
+            }
         }
-
-        protected virtual void OnProductDeleted()
-        {
-            if (ProductDeleted != null)
-                ProductDeleted(this, EventArgs.Empty);
-        }
-
-        public delegate void ProductAddedEventHandler(object source, EventArgs args);
-
-        public event ProductAddedEventHandler ProductAdded;
-
-        public delegate void ProductEditedEventHandler(object source, EventArgs args);
-
-        public event ProductEditedEventHandler ProductEdited;
 
         /// <summary>
         /// Adds new product to the table or updates one if product with same ID already exists.
@@ -93,21 +146,48 @@ namespace WpfStorage
         /// <param name="product"></param>
         public void AddProduct(tblProduct product)
         {
-            OnProductAdded();
-
-            OnProductEdited();
+            using (StorageEntities context = new StorageEntities())
+            {
+                if (product.ID == 0)
+                {
+                    context.tblProducts.Add(product);
+                    context.SaveChanges();
+                    OnProductAdded();
+                }
+                else
+                {
+                    tblProduct productToEdit = (from p in context.tblProducts where p.ID == product.ID select p).First();
+                    productToEdit.ProductName = product.ProductName;
+                    productToEdit.Code = product.Code;
+                    productToEdit.Price = product.Price;
+                    productToEdit.Amount = product.Amount;
+                    productToEdit.ID = product.ID;
+                    context.SaveChanges();
+                    OnProductEdited();
+                }
+            }
         }
 
-        protected virtual void OnProductAdded()
+        /// <summary>
+        /// Sums all products amount.
+        /// </summary>
+        /// <returns></returns>
+        public int SumAllStoredProducts()
         {
-            if (ProductAdded != null)
-                ProductAdded(this, EventArgs.Empty);
+            List<tblProduct> list = GetAllProducts();
+            int amount = 0;
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].Stored)
+                {
+                    amount = amount = list[i].Amount;
+                }
+            }
+
+            return amount;
         }
 
-        protected virtual void OnProductEdited()
-        {
-            if (ProductEdited != null)
-                ProductEdited(this, EventArgs.Empty);
-        }
+        #endregion
     }
 }

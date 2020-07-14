@@ -31,10 +31,10 @@
                                     Binding="{Binding Stored}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Store product"
+        <Button Content="Store\Unstore"
                 Command="{Binding StoreProduct, UpdateSourceTrigger=PropertyChanged}"
                 HorizontalAlignment="Left"
-                Margin="445,13,0,0"
+                Margin="550,13,0,0"
                 VerticalAlignment="Top"
                 Width="90"
                 RenderTransformOrigin="0.32,2.25" />

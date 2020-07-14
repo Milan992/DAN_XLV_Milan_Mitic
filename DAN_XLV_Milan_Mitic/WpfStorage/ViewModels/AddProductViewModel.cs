@@ -25,6 +25,12 @@ namespace WpfStorage.ViewModels
             addProduct = addProductOpen;
         }
 
+        public AddProductViewModel(AddProduct addProductOpen, tblProduct productedit)
+        {
+            product = productedit;
+            addProduct = addProductOpen;
+        }
+
         #endregion
 
         #region Properties 
@@ -72,6 +78,7 @@ namespace WpfStorage.ViewModels
                 service.ProductEdited += fileLogger.LogEditedProduct;
                 service.ProductEdited += notification.ProductEdited;
                 service.AddProduct(Product);
+                addProduct.Close();
             }
             catch (Exception ex)
             {

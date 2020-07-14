@@ -84,6 +84,7 @@ namespace WpfStorage.ViewModels
                 service.ProductStored += notification.ProductStored;
                 service.ProductNotStored += notification.ProductNotStored;
                 service.StoreProduct(Product);
+                ProductList = service.GetAllProducts();
             }
             catch (Exception ex)
             {
