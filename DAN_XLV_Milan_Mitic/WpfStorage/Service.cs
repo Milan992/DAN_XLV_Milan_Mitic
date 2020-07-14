@@ -116,9 +116,26 @@ namespace WpfStorage
         /// <param name="product"></param>
         public void AddProduct(tblProduct product)
         {
-            OnProductAdded();
-
-            OnProductEdited();
+            using (StorageEntities context = new StorageEntities())
+            {
+                if (product.ID == 0)
+                {
+                    context.tblProducts.Add(product);
+                    context.SaveChanges();
+                    OnProductAdded();
+                }
+                else
+                {
+                    tblProduct productToEdit = (from p in context.tblProducts where p.ID == product.ID select p).First();
+                    productToEdit.ProductName = product.ProductName;
+                    productToEdit.Code = product.Code;
+                    productToEdit.Price = product.Price;
+                    productToEdit.Amount = product.Amount;
+                    productToEdit.ID = product.ID;
+                    context.SaveChanges();
+                    OnProductEdited();
+                }
+            }
         }
 
         /// <summary>

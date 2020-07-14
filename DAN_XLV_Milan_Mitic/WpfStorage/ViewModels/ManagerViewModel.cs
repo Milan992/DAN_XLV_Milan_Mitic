@@ -116,7 +116,7 @@ namespace WpfStorage.ViewModels
         {
             try
             {
-                AddProduct addProduct = new AddProduct();
+                AddProduct addProduct = new AddProduct(product);
                 addProduct.ShowDialog();
                 ProductList = service.GetAllProducts();
             }
